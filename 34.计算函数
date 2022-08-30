@@ -10,4 +10,4 @@ int main() {
 		y=3*x-11;
 	printf("%d\n",y);
 	return 0;
-} 
+}
