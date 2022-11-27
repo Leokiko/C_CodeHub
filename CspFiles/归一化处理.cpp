@@ -1,3 +1,4 @@
+// http://118.190.20.162/view.page?gpid=T148
 #include <stdio.h>
 #include <math.h>
 
@@ -10,18 +11,21 @@ int main()
 	{
 		scanf_s("%lf", &a[i]);
 	}
+	// a_是公式得到的
 	double a_ = 0;
 	for (int i = 0; i < n; i++)
 	{
 		a_ += a[i];
 	}
 	a_ /= n;
+	// A也是公式得到的
 	double A = 0;
 	for (int i = 0; i < n; i++)
 	{
 		A += ((a[i] - a_) * (a[i] - a_));
 	}
 	A *= (1 / (double)n);
+
 	for (int i = 0; i < n; i++)
 	{
 		printf("%lf.17\n", (a[i] - a_) / sqrt(A));
