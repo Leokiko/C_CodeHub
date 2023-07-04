@@ -4,4 +4,4 @@
 1. SWUST_OJ_subject
 2. CCF_csp
 ---
-just for cpp_file,no env
+just about cpp_file,no env
