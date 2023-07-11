@@ -230,3 +230,156 @@ int main() {
     }
     return 0;
 }
+
+//---------------------------------------------------------------------
+// 3.0
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void checkdata(int &a) {
+    if (a == 10)
+        a = 0;
+}
+
+// 设定循环与走的步数之间的关系
+int circlestep(int circle, int flag, int n, int m) {
+    if (flag == 1) {
+        return m - 2 * (circle - 1);
+    } else if (flag == 2) {
+        return n - 2 * (circle - 1) - 1;
+    } else if (flag == 3) {
+        return m - 2 * (circle - 1) - 1;
+    } else if (flag == 4) {
+        return n - 2 * circle;
+    }
+}
+
+// 创建边界数组
+// int boder[4][2] = {0};
+// bool checkboder() {
+//  if ((boder[0][0] != boder[1][0] || boder[0][0] != boder[2][0] ||
+//       boder[0][0] != boder[3][0]) ||
+//      (boder[0][1] != boder[1][1] || boder[0][1] != boder[2][1] ||
+//       boder[0][1] != boder[3][1]))
+//    return true;
+//}
+
+// bool checkcount(int &a, int &b) {
+//   if (a == b)
+//     return true;
+//   else
+//     return false;
+// }
+
+int main() {
+    int n, m;
+    // data为要填充的数据(0-9的循环)，flag为方向标志，1为向右，2为向下，3为向左，4为向上
+    int data = 0, flag = 1;
+    while (cin >> n >> m) {
+        if (n == 0 && m == 0)
+            break;
+
+        //// 左上
+        // boder[0][0] = 1;
+        // boder[0][1] = 0;
+        //// 右上
+        // boder[1][0] = 0;
+        // boder[1][1] = m - 1;
+        //// 左下
+        // boder[2][0] = n - 1;
+        // boder[2][1] = 0;
+        //// 右下
+        // boder[3][0] = n - 1;
+        // boder[3][1] = m - 1;
+
+        // 创建两个n*m的二维数组，并初始化
+
+        //---------------------------------------
+        // 这里用不上，因为并没有使用边界数组，而是使用循环次数来控制方向
+
+        vector<vector<int>> a(n, vector<int>(m));
+        // vector<vector<int>> b(n, vector<int>(m));
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++) {
+                a[i][j] = 0;
+                // b[i][j] = 1;
+            }
+
+        // 计算总共要填充的数据个数，设定跳出条件
+        int countAll = n * m;
+        // 不使用边界数组，使用循环次数来控制方向
+        int circle = 1;
+
+        int i = 0, j = 0, count = 0;
+        while (count < countAll) {
+            if (flag == 4) {
+                for (int ii = 0; ii < circlestep(circle, flag, n, m); ii++) {
+                    checkdata(data);
+                    a[i][j] = data++;
+                    i--;
+                }
+                count += circlestep(circle, flag, n, m);
+                flag = 1;
+                circle++;
+                i++;
+                j++;
+            }
+            if (flag == 3) {
+                for (int ii = 0; ii < circlestep(circle, flag, n, m); ii++) {
+                    checkdata(data);
+                    a[i][j] = data++;
+                    j--;
+                }
+                count += circlestep(circle, flag, n, m);
+                flag = 4;
+                i--;
+                j++;
+            }
+            if (flag == 2) {
+                for (int ii = 0; ii < circlestep(circle, flag, n, m); ii++) {
+                    checkdata(data);
+                    a[i][j] = data++;
+                    i++;
+                }
+                count += circlestep(circle, flag, n, m);
+                flag = 3;
+                i--;
+                j--;
+            }
+            if (flag == 1) {
+                for (int ii = 0; ii < circlestep(circle, flag, n, m); ii++) {
+                    checkdata(data);
+                    a[i][j] = data++;
+                    j++;
+                }
+                count += circlestep(circle, flag, n, m);
+                flag = 2;
+                i++;
+                j--;
+            }
+
+            //// 打印a数组
+            // for (int i = 0; i < n; i++) {
+            //   for (int j = 0; j < m; j++)
+            //     cout << a[i][j] << " ";
+            //   cout << endl;
+            // }
+            //// 打印边界数组
+            // cout << "boder:" << endl;
+            // for (int i = 0; i < 4; i++) {
+            //   for (int j = 0; j < 2; j++)
+            //     cout << boder[i][j] << " ";
+            //   cout << endl;
+            // }
+            // cout << endl;
+        }
+        // 打印a数组
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++)
+                cout << a[i][j];
+            cout << endl;
+        }
+    }
+    return 0;
+}
