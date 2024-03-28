@@ -1,4 +1,4 @@
-// http :  // 118.190.20.162/view.page?gpid=T170
+// http://118.190.20.162/view.page?gpid=T170
 #include <iostream>
 #include <vector>
 using namespace std;
