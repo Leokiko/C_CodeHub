@@ -88,3 +88,64 @@ int main() {
     cout << re << endl;
     return 0;
 }
+
+// ----------------------------------------------
+// 100答案
+#include <algorithm>
+#include <iostream>
+#include <set>
+#include <vector>
+using namespace std;
+
+#define x first
+#define y second
+
+typedef pair<int, int> PII;
+const int              N = 1010, M = 55;
+// n : 树的个数
+// m : 绿化图的大小
+// k : 藏宝图的大小
+// res : 符合题意的方案数
+int n, m, k, res;
+// 藏宝图
+int g[N][N];
+// 绿化图中树的坐标
+set<PII> t;
+
+int main() {
+    cin >> n >> m >> k;
+    for (int i = 0; i < n; ++i) {
+        int a, b;
+        cin >> a >> b;
+        t.insert({a, b});
+    }
+
+    for (int i = k; i >= 0; --i)
+        for (int j = 0; j <= k; ++j)
+            cin >> g[i][j];
+
+    for (auto& tree : t) {
+        bool f = true;
+        int  a = tree.x, b = tree.y;
+        if (a + k > m || b + k > m)
+            continue;
+        for (int i = 0; i <= k; ++i) {
+            for (int j = 0; j <= k; ++j) {
+                if (g[i][j] && !t.count({a + i, b + j})) {
+                    f = false;
+                    break;
+                }
+
+                if (!g[i][j] && t.count({a + i, b + j})) {
+                    f = false;
+                    break;
+                }
+            }
+            if (!f)
+                break;
+        }
+        if (f)
+            ++res;
+    }
+    cout << res << endl;
+}
